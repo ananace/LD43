@@ -1,0 +1,4 @@
+resources/MenuBackground.png filter=lfs diff=lfs merge=lfs -text
+resources/MenuBackground.xcf filter=lfs diff=lfs merge=lfs -text
+resources/bomb.png filter=lfs diff=lfs merge=lfs -text
+dist/com.ldjam.ananace.LD41.png filter=lfs diff=lfs merge=lfs -text

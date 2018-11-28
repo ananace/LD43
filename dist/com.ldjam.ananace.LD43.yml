@@ -1,0 +1,23 @@
+---
+app-id: com.ldjam.ananace.LD43
+branch: master
+runtime: org.freedesktop.Platform
+runtime-version: "18.08"
+sdk: org.freedesktop.Sdk
+
+command: LD43
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --device=dri
+
+modules:
+  - shared-modules/udev/udev-175.json
+  - sfml-2.5.1.yml
+
+  - name: LD43
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/ananace/LD43.git
+        tag: master

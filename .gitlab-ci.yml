@@ -1,0 +1,19 @@
+---
+stages:
+  - test
+
+variables:
+  FLATPAK_MANIFEST: com.ldjam.ananace.LD43.yml
+
+.flatpak_cache:
+    cache:
+        key: "flatpak"
+        paths:
+          - .flatpak-builder/cache/
+
+build_flatpak:
+  extends: .flatpak_cache
+  stage: test
+  image: 
+  script:
+    - flatpak-builder --force-clean app ${FLATPAK_MANIFEST}
