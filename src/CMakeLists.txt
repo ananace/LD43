@@ -16,6 +16,7 @@ endif ()
 
 set(headers
     Application.hpp
+    IState.hpp
 )
 
 set(sources
@@ -27,10 +28,8 @@ set(sources
 # Group source files
 set(header_group "Header Files")
 set(source_group "Source Files")
-source_group_by_path(${CMAKE_CURRENT_SOURCE_DIR} "\\\\.h$|\\\\.hpp$|\\\\.inl$" 
-    ${header_group} ${headers})
-source_group_by_path(${CMAKE_CURRENT_SOURCE_DIR}  "\\\\.cpp$|\\\\.c$|\\\\.h$|\\\\.hpp$|\\\\.inl$" 
-    ${source_group} ${sources})
+source_group(${header_group} FILES ${headers})
+source_group(${source_group} FILES ${sources})
 
 # 
 # Create executable
@@ -51,6 +50,7 @@ add_executable(LD43
 set_target_properties(LD43
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
+    FOLDER ""
 )
 
 
@@ -62,6 +62,7 @@ target_include_directories(LD43
     PRIVATE
     ${DEFAULT_INCLUDE_DIRECTORIES}
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${SFML_INCLUDE_DIR}
 )
 
 
@@ -72,7 +73,8 @@ target_include_directories(LD43
 target_link_libraries(LD43
     PRIVATE
     ${DEFAULT_LIBRARIES}
-    LD43::Core
+    ${SFML_LIBRARIES}
+    ${SFML_DEPENDENCIES}
 )
 
 
