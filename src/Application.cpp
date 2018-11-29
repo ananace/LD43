@@ -14,6 +14,14 @@
 #include <algorithm>
 #include <chrono>
 
+namespace
+{
+
+sf::VideoMode s_videoMode { 800, 600 };
+int s_windowFlags = sf::Style::Default;
+
+}
+
 bool findSystemFont(std::string* fontPath, const std::string& name, const std::string& style = "Regular");
 
 Application::Application()
@@ -57,8 +65,21 @@ void Application::init(int aArgc, char** aArgv)
 
     for  (int i = 1; i < aArgc; ++i)
     {
-        if (std::string(aArgv[i]) == "-v")
+        std::string arg = aArgv[i];
+        if (arg == "-v")
             Logging::SetLevel(Logging::Debug);
+        else if (arg == "-f")
+        {
+            LOG(INFO) << "Running in borderless fullscreen" << std::endl;
+            s_videoMode = sf::VideoMode::getDesktopMode();
+            s_windowFlags = sf::Style::None;
+        }
+        else if (arg == "-F")
+        {
+            LOG(INFO) << "Running in fullscreen" << std::endl;
+            s_videoMode = sf::VideoMode::getFullscreenModes().front();
+            s_windowFlags = sf::Style::Fullscreen;
+        }
     }
 
     // Find default fonts
@@ -112,17 +133,16 @@ void Application::init(int aArgc, char** aArgv)
         LOG(ERROR) << "Didn't manage to find a default font, probably going to explode now. Sorry." << std::endl;
         return;
     }
-
-    m_window.setFramerateLimit(200);
 }
 
 void Application::run()
 {
+    m_window.create(s_videoMode, "LD43", s_windowFlags);
+    m_window.setFramerateLimit(200);
+
     auto curFrame = std::chrono::high_resolution_clock::now(),
          lastFrame = curFrame;
     auto dt = curFrame - lastFrame;
-
-
     sf::Event ev{};
     while (m_window.isOpen())
     {
