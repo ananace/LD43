@@ -2,7 +2,11 @@
 #include "IState.hpp"
 
 #include <SFML/Window/Event.hpp>
+
 #include <SFML/Graphics/Font.hpp>
+#ifndef NDEBUG
+#include <SFML/Graphics/Text.hpp>
+#endif
 
 #if defined(SFML_SYSTEM_LINUX)
 #include <fontconfig/fontconfig.h>
@@ -138,11 +142,19 @@ void Application::init(int aArgc, char** aArgv)
 void Application::run()
 {
     m_window.create(s_videoMode, "LD43", s_windowFlags);
-    m_window.setFramerateLimit(200);
+    m_window.setVerticalSyncEnabled(true);
 
     auto curFrame = std::chrono::high_resolution_clock::now(),
          lastFrame = curFrame;
     auto dt = curFrame - lastFrame;
+
+#ifndef NDEBUG
+    auto monoFont = m_resourceManager.load<sf::Font>("font/mono");
+    sf::Text fpsDisplay("0 FPS (0 ms)", *monoFont, 12);
+    auto lastUpdate = curFrame;
+#endif
+
+    sf::View defaultView = m_window.getDefaultView();
     sf::Event ev{};
     while (m_window.isOpen())
     {
@@ -155,8 +167,19 @@ void Application::run()
             if (m_curState)
                 m_curState->event(ev);
 
-            if (ev.type == sf::Event::Closed)
+            switch (ev.type)
+            {
+            case sf::Event::Resized:
+                defaultView.setSize(sf::Vector2f(m_window.getSize()));
+                defaultView.setCenter(sf::Vector2f(m_window.getSize()) / 2.f);
+                break;
+
+            case sf::Event::Closed:
                 m_window.close();
+                break;
+
+            default: break;
+            }
         }
 
         if (m_curState)
@@ -166,6 +189,21 @@ void Application::run()
 
         if (m_curState)
             m_curState->draw(m_window, {});
+
+        // Start every frame with the default view
+        m_window.setView(defaultView);
+
+#ifndef NDEBUG
+        if (curFrame - lastUpdate > std::chrono::seconds(1))
+        {
+            auto msDt = std::chrono::duration_cast<std::chrono::microseconds>(dt).count();
+            int fps = 1000000 / std::max<int>(msDt, 1);
+            fpsDisplay.setString(std::to_string(fps) + "FPS (" + std::to_string(msDt / 1000.f) + " ms)");
+            lastUpdate = curFrame;
+        }
+
+        m_window.draw(fpsDisplay);
+#endif
 
         m_window.display();
     }
