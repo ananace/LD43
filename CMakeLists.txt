@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 project(LD43)
 
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 set(CMAKE_DEBUG_POSTFIX          "d")
 set(CMAKE_MINSIZEREL_POSTFIX     "s")

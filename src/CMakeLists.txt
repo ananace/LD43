@@ -3,10 +3,11 @@
 # 
 
 if (WIN32)
-	find_package(SFML 2 REQUIRED COMPONENTS audio graphics main system window)
-	add_definitions(-D_USE_MATH_DEFINES)
+    find_package(SFML 2 REQUIRED COMPONENTS audio graphics main system window)
+    add_definitions(-D_USE_MATH_DEFINES)
 else ()
-	find_package(SFML 2 REQUIRED COMPONENTS audio graphics system window)
+    find_package(SFML 2 REQUIRED COMPONENTS audio graphics system window)
+    find_package(FontConfig REQUIRED)
 endif ()
 
 
@@ -16,11 +17,16 @@ endif ()
 
 set(headers
     Application.hpp
+    Logging.hpp
+    ResourceManager.hpp
+
     IState.hpp
 )
 
 set(sources
     Application.cpp
+    Logging.cpp
+    ResourceManager.cpp
 
     main.cpp
 )
@@ -62,6 +68,7 @@ target_include_directories(LD43
     PRIVATE
     ${DEFAULT_INCLUDE_DIRECTORIES}
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${FontConfig_INCLUDE_DIRS}
     ${SFML_INCLUDE_DIR}
 )
 
@@ -73,6 +80,7 @@ target_include_directories(LD43
 target_link_libraries(LD43
     PRIVATE
     ${DEFAULT_LIBRARIES}
+    ${FontConfig_LIBRARIES}
     ${SFML_LIBRARIES}
     ${SFML_DEPENDENCIES}
 )

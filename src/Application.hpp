@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ResourceManager.hpp"
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <memory>
@@ -22,10 +24,14 @@ public:
     sf::RenderWindow& getRenderWindow();
     const sf::RenderWindow& getRenderWindow() const;
 
+    ResourceManager& getResourceManager();
+    const ResourceManager& getResourceManager() const;
+
     void init(int aArgc, char** aArgv);
     void run();
 
 private:
     sf::RenderWindow m_window;
     std::unique_ptr<IState> m_curState;
+    ResourceManager m_resourceManager;
 };
