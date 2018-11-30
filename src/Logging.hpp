@@ -14,7 +14,7 @@ public:
         Info,
         Debug,
 
-        Max,
+        Count,
 
         // For nicer preprocessor look
         ERROR = Error,

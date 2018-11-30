@@ -17,7 +17,7 @@ namespace
     std::ostream null_stream(&null_buffer);
 }
 
-char LogLevelCode[] = "EWID";
+char LogLevelCode[Logging::Count] = { 'E', 'W', 'I', 'D' };
 
 void Logging::SetLevel(Level aLogLevel)
 {
