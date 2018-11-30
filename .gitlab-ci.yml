@@ -15,7 +15,7 @@ variables:
 build_flatpak:
   extends: .flatpak_cache
   stage: deploy
-  image: ananace/flatpak-builder
+  image: ananace/flatpak-builder:fdo-18.08
   script:
     - flatpak-builder --force-clean --repo=export app ${FLATPAK_MANIFEST}
     - flatpak build-bundle export/ com.ldjam.ananace.LD43.flatpak com.ldjam.ananace.LD43
