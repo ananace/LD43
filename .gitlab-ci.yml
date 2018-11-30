@@ -4,6 +4,7 @@ stages:
 
 variables:
   FLATPAK_MANIFEST: dist/com.ldjam.ananace.LD43.yml
+  GIT_SUBMODULE_STRATEGY: normal
 
 .flatpak_cache:
   cache:
