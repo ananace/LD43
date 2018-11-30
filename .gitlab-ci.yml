@@ -1,19 +1,24 @@
 ---
 stages:
-  - test
+  - deploy
 
 variables:
-  FLATPAK_MANIFEST: com.ldjam.ananace.LD43.yml
+  FLATPAK_MANIFEST: dist/com.ldjam.ananace.LD43.yml
 
 .flatpak_cache:
-    cache:
-        key: "flatpak"
-        paths:
-          - .flatpak-builder/cache/
+  cache:
+    key: "flatpak"
+    paths:
+      - .flatpak-builder/cache/
 
 build_flatpak:
   extends: .flatpak_cache
-  stage: test
-  image: 
+  stage: deploy
+  image: ananace/flatpak-builder
   script:
-    - flatpak-builder --force-clean app ${FLATPAK_MANIFEST}
+    - flatpak-builder --force-clean --repo=export app ${FLATPAK_MANIFEST}
+    - flatpak build-bundle export/ com.ldjam.ananace.LD43.flatpak com.ldjam.ananace.LD43
+  artifacts:
+    paths:
+      - com.ldjam.ananace.LD43.flatpak
+    expire_in: 1 week
