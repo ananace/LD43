@@ -7,13 +7,16 @@
 namespace sf { class Event; }
 
 class Application;
+
 class IState : public sf::Drawable
 {
 public:
-    virtual void init();
-    virtual void event(const sf::Event& aEv);
-    virtual void update(float aDt);
-    virtual void draw(sf::RenderTarget& aRt, sf::RenderStates aStates) const override;
+    IState();
+
+    virtual void init() = 0;
+    virtual void event(const sf::Event& aEv) = 0;
+    virtual void update(float aDt) = 0;
+    virtual void draw(sf::RenderTarget& aRt, sf::RenderStates aStates) const override = 0;
 
 protected:
     Application& getApp() { return *m_app; }

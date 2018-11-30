@@ -1,6 +1,8 @@
 #include "Application.hpp"
 #include "IState.hpp"
 
+#include "States/IntroState.hpp"
+
 #include <SFML/Window/Event.hpp>
 
 #include <SFML/Graphics/Font.hpp>
@@ -87,7 +89,7 @@ void Application::init(int aArgc, char** aArgv)
     }
 
     // Find default fonts
-
+    // TODO: Move this to a more reasonable place, instead of in the middle of the application initialization
     static std::array<std::tuple<std::string, std::string>, 10> s_defaultFontList {{
         std::make_tuple("DejaVu Sans", "Book"),
         std::make_tuple("Bitstream Vera Sans", "Roman"),
@@ -137,6 +139,8 @@ void Application::init(int aArgc, char** aArgv)
         LOG(ERROR) << "Didn't manage to find a default font, probably going to explode now. Sorry." << std::endl;
         return;
     }
+
+    setState(std::make_unique<States::IntroState>());
 }
 
 void Application::run()
@@ -381,3 +385,7 @@ bool findSystemFont(std::string* p_fontPath, const std::string& fontName, const 
 #endif
     return false;
 }
+
+IState::IState()
+    : m_app(nullptr)
+{ }

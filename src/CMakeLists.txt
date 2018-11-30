@@ -21,12 +21,18 @@ set(headers
     ResourceManager.hpp
 
     IState.hpp
+
+    States/IntroState.hpp
+    States/MenuState.hpp
 )
 
 set(sources
     Application.cpp
     Logging.cpp
     ResourceManager.cpp
+
+    States/IntroState.cpp
+    States/MenuState.cpp
 
     main.cpp
 )
