@@ -1,14 +1,11 @@
-### Ludum Dare #41 - Combine 2 Incompatible Genres
+### Ludum Dare #43
 
 Idea
 ----
 
-One strategy game, one action game.
-
-Games of choice are Asteroids and Minesweeper, both sharing the same win/lose condition, the same controls, and the same score.
 
 
 Requirements
 ------------
 
-You need CMake 3.0+ and SFML 2.4+ installed.
+You need CMake 3.0+, SFML 2.4+, and a modern-ish compiler installed (tested with GCC 6.4.0 and Clang 7.0.0).
