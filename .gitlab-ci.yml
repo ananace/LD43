@@ -18,7 +18,7 @@ build_flatpak:
   image: ananace/flatpak-builder
   script:
     - flatpak install --no-related --assumeyes flathub org.freedesktop.Platform//18.08 org.freedesktop.Sdk//18.08
-    - flatpak-builder --force-clean --repo=export app ${FLATPAK_MANIFEST}
+    - flatpak-builder --disable-rofiles-fuse --force-clean --repo=export app ${FLATPAK_MANIFEST}
     - flatpak build-bundle export/ com.ldjam.ananace.LD43.flatpak com.ldjam.ananace.LD43
   when: manual
   artifacts:
